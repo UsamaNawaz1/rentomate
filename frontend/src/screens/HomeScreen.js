@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Row, Col, Image, Button } from "react-bootstrap";
 import {} from "@chakra-ui/react";
+
 import HeroImage from "../images/hero-bg2.png";
 
 import HeroHomeThree from "../images/hero-home3.jpg";
@@ -9,7 +10,9 @@ const HomeScreen = () => {
   var message = `We provide a complete service for the sale, purchase or
   rental of real estate.`;
   return (
+    
     <main>
+     
       <section
         style={{
           backgroundColor: "#F4F5F9",

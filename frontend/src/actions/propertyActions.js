@@ -19,8 +19,8 @@ export const listProperties = () => async (dispatch) => {
     dispatch({
       type: PROPERTY_LIST_FAIL,
       payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
+        error.response && error.response.data.detail
+          ? error.response.data.detail
           : error.message,
     });
   }
@@ -37,8 +37,8 @@ export const listPropertyDetails = (id) => async (dispatch) => {
     dispatch({
       type: PROPERTY_DETAILS_FAIL,
       payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
+        error.response && error.response.data.detail
+          ? error.response.data.detail
           : error.message,
     });
   }

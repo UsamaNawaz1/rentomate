@@ -4,13 +4,24 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import {
   propertyListReducer,
   propertyDetailsReducer,
+
 } from "./reducers/propertyReducers";
+
+import { userLoginReducers } from './reducers/userReducers'
 
 const reducer = combineReducers({
   propertyList: propertyListReducer,
   propertyDetails: propertyDetailsReducer,
+  userLogin: userLoginReducers,
 });
-const initialState = {};
+
+
+const userInfoFromStorage = localStorage.getItem('userInfo') ?
+  JSON.parse(localStorage.getItem('userInfo')) : null
+
+const initialState = {
+  userLogin: {userInfo: userInfoFromStorage}
+};
 
 const middleware = [thunk];
 

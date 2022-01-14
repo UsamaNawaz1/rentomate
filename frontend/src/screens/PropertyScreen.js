@@ -9,6 +9,7 @@ import { listPropertyDetails } from "../actions/propertyActions";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 
+
 const PropertyScreen = ({ match }) => {
   const dispatch = useDispatch();
   const productDetails = useSelector((state) => state.propertyDetails);
@@ -17,6 +18,7 @@ const PropertyScreen = ({ match }) => {
     dispatch(listPropertyDetails(match.params.id));
   }, [dispatch]);
   return (
+    
     <div>
       {loading ? (
         <Loader />

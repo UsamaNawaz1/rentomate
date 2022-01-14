@@ -6,6 +6,7 @@ import HomeScreen from "./screens/HomeScreen";
 import ViewPropertyScreen from "./screens/ViewPropertyScreen";
 import PropertyScreen from "./screens/PropertyScreen";
 import { ChakraProvider } from "@chakra-ui/react";
+import LoginScreen from "./screens/LoginScreen";
 
 function App() {
   return (
@@ -19,9 +20,15 @@ function App() {
         <ChakraProvider>
           <Route path="/property/:id" component={PropertyScreen} />
         </ChakraProvider>
+        <ChakraProvider>
+        <Route path="/login" component={LoginScreen} />
+        </ChakraProvider>
+        
+        
       </main>
 
       <Footer />
+      
     </Router>
   );
 }
