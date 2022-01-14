@@ -76,7 +76,7 @@ const ViewPropertyScreen = () => {
                       boxShadow: "none",
                     }}
                   >
-                    Commercial
+                    Hostel
                   </Button>
                 </Col>
               </Row>
