@@ -1,0 +1,44 @@
+body{
+  font-family: 'Poppins', sans-serif !important;
+}
+
+#AppMain{
+  min-height: 80vh;
+}
+
+
+.new-line {
+  white-space: pre-line;
+}
+
+.vl {
+ 
+  border-left: thick solid #ff0000;
+}
+
+.wrap {
+  display: flex;
+}
+
+.left {
+  background: white;
+  flex-basis: 20%;
+}
+
+.right {
+  background: #f4f5f9;
+  flex-basis: 80%;
+  
+  height: 140vh; 
+  overflow: auto;
+}
+
+.divBorder{
+  border: 2px solid #E1E1E1;
+  border-radius: 10px;
+  
+}
+
+
+
+
