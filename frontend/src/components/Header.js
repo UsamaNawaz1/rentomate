@@ -4,6 +4,7 @@ import { Navbar, Nav, Container, Row, Button, Image, NavDropdown } from "react-b
 import Logo from "../images/rentomate.png";
 import { LinkContainer } from "react-router-bootstrap";
 import {logout} from '../actions/userActions'
+import  { Redirect } from 'react-router-dom'
 
 
 const Header = () => {
@@ -14,6 +15,7 @@ const Header = () => {
   const dispatch = useDispatch()
   const logoutHandler = () => {
     dispatch(logout())
+   
   }
 
   return (
@@ -42,10 +44,20 @@ const Header = () => {
               <LinkContainer to="/howitworks">
                 <Nav.Link>How it works</Nav.Link>
               </LinkContainer>
+
+              {userInfo && (
+                <LinkContainer to="/admin/dashboard">
+                <Nav.Link >Admin Dashboard</Nav.Link>
+                </LinkContainer>
+              )}
+              
               {userInfo ? (
-                <NavDropdown title={userInfo.name} id='username'>
+                
+                <NavDropdown title={userInfo.user_profile.user.name} id='username'>
                   <LinkContainer to='/profile'><NavDropdown.Item>Profile</NavDropdown.Item></LinkContainer>
-                  <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
+                  <LinkContainer to="/"><NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item></LinkContainer>
+                  
+                
                 </NavDropdown>
                 
               ): (
@@ -57,6 +69,7 @@ const Header = () => {
               )}
               
               {!userInfo && (
+                
                 <Button
                 style={{
                   fontSize: "13px",

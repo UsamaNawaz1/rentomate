@@ -7,6 +7,12 @@ import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import store from "./store";
 
+import "./bootstrap.min.css";
+import "./assets/css/animate.min.css";
+import "./assets/scss/light-bootstrap-dashboard-react.scss?v=2.0.0";
+import "./assets/css/demo.css";
+
+
 ReactDOM.render(
   <Provider store={store}>
     <App />

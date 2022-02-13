@@ -1,14 +1,27 @@
-import React from "react";
-import { Container, Row, Col, Image, Button } from "react-bootstrap";
+import React, { useState, useEffect, useContext } from "react";
+import { PropertyContext } from '../Contexts/PropertyContext';
+import { Container, Row, Col, Image, Button, Form } from "react-bootstrap";
 import {} from "@chakra-ui/react";
 
 import HeroImage from "../images/hero-bg2.png";
 
+import { useDispatch, useSelector } from "react-redux";
+import { listProperties } from "../actions/propertyActions";
+import { LinkContainer } from "react-router-bootstrap";
+
 import HeroHomeThree from "../images/hero-home3.jpg";
 import HeroHomeFour from "../images/hero-home41.png";
+
 const HomeScreen = () => {
   var message = `We provide a complete service for the sale, purchase or
   rental of real estate.`;
+  const dispatch = useDispatch();
+  const {keyword, setKeyword, propertyType, setPropertyType} = useContext(PropertyContext);
+
+  useEffect(() => {
+    dispatch(listProperties(keyword, propertyType));
+  }, [dispatch, keyword, propertyType]);
+
   return (
     
     <main>
@@ -66,7 +79,7 @@ const HomeScreen = () => {
       </section>
       <div
         style={{
-          width: "60%",
+          width: "65%",
           height: "auto",
           margin: "auto",
           borderRadius: "30px",
@@ -80,38 +93,55 @@ const HomeScreen = () => {
         }}
       >
         <Container>
+        <Form>
           <Row>
             <Col className="p-3">
               <h7 className="fw-bold">Location</h7>
               <br></br>
-              <h8
+              {/* <h8
                 style={{
                   fontSize: "13px",
                   color: "#6B6B6B",
                 }}
               >
                 Select your city
-              </h8>
-              <i
-                class="fas fa-map-marker-alt"
-                style={{ float: "right", color: "#2196f3" }}
-              ></i>
+              </h8> */}
+              
+              <Form.Group>
+              
+                <Form.Control
+                  type="text"
+                  value={keyword}
+                  onChange={ (e) => setKeyword(e.target.value)}
+                  size="sm"
+                  className="pt-1"
+                  placeholder="Select your city"
+                  style={{ color: "#636363" }}
+                  />
+
+                </Form.Group>
+              
+              
             </Col>
             <Col className="p-3">
               <h7 className="fw-bold">Property Type</h7>
               <br></br>
-              <h8
+              {/* <h8
                 style={{
                   fontSize: "13px",
                   color: "#6B6B6B",
                 }}
               >
                 Choose property type
-              </h8>
-              <i
-                class="fas fa-angle-down"
-                style={{ float: "right", color: "#2196f3" }}
-              ></i>
+              </h8> */}
+              <Form.Select className="pt-1" size="sm" onChange={(e) => setPropertyType(e.target.value)} aria-label="Default select example" style={{color:"#6B6B6B"}}>
+                <option>Select property type</option>
+                <option value="House">House</option>
+                <option value="Apartment">Apartment</option>
+                <option value="Plot">Plot</option>
+                <option value="Hostel">Hostel</option>
+              </Form.Select>
+              
             </Col>
             <Col md={5} lg={5}>
               <Col className="p-3">
@@ -125,18 +155,22 @@ const HomeScreen = () => {
                 >
                   Choose a price range
                 </h8>
-                <Button
-                  style={{
-                    float: "right",
-                    padding: "10px 15px 10px 15px",
-                    marginTop: "-23px",
-                  }}
-                >
-                  <i style={{ fontSize: "20px" }} class="fas fa-search"></i>
-                </Button>
+                <LinkContainer to='/properties'>
+                  <Button
+                    style={{
+                      float: "right",
+                      padding: "10px 15px 10px 15px",
+                      marginTop: "-23px",
+                    }}
+                  >
+                    <i style={{ fontSize: "20px" }} class="fas fa-search"></i>
+                  </Button>
+                </LinkContainer>
+                
               </Col>
             </Col>
           </Row>
+        </Form>
         </Container>
       </div>
 

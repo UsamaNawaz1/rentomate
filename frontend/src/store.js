@@ -4,15 +4,20 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import {
   propertyListReducer,
   propertyDetailsReducer,
+  propertyLandlordReducer
 
 } from "./reducers/propertyReducers";
 
-import { userLoginReducers } from './reducers/userReducers'
+import { userLoginReducers, userRegisterReducers, userDetailReducers, userUpdateReducers } from './reducers/userReducers'
 
 const reducer = combineReducers({
   propertyList: propertyListReducer,
   propertyDetails: propertyDetailsReducer,
   userLogin: userLoginReducers,
+  userRegister: userRegisterReducers,
+  landlordProperties: propertyLandlordReducer,
+  userDetail: userDetailReducers,
+  userUpdate: userUpdateReducers
 });
 
 

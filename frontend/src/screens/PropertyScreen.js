@@ -69,7 +69,7 @@ const PropertyScreen = ({ match }) => {
                   <i style={{ fontSize: "25px" }} class="fas fa-bath"></i>{" "}
                   {property.no_of_baths} Baths &bull;{" "}
                   <i style={{ fontSize: "25px" }} class="fas fa-chart-area"></i>{" "}
-                  {property.area} Marlas
+                  {property.total_area} Marlas
                 </Box>
               </Box>
               <br></br>
@@ -78,9 +78,8 @@ const PropertyScreen = ({ match }) => {
                   <h1 style={{ fontSize: "27px", fontWeight: "700" }}>
                     {property.title}
                   </h1>
-                  <h1>
-                    {property.city}, {property.state}
-                  </h1>
+                  {property.address ? <h1>{property.address.city}, {property.address.state}</h1> : " "}
+                  
                   <br></br>
                   <div className="divBorder">
                     <div style={{ padding: "20px" }}>
@@ -104,7 +103,7 @@ const PropertyScreen = ({ match }) => {
                     </div>
                   </div>
                 </Col>
-
+                
                 <Col lg={4} md={4} xs={12} sm={12} style={{ display: "flex" }}>
                   <div className="divBorder" style={{}}>
                     <div
@@ -124,15 +123,13 @@ const PropertyScreen = ({ match }) => {
                         src="/images/avatar.jpg"
                       />
 
-                      <h1
-                        style={{
+                      
+                        {property.created_by ? <h1 style={{
                           paddingTop: "10px",
                           fontSize: "15px",
                           fontWeight: "700",
-                        }}
-                      >
-                        {property.created_by}
-                      </h1>
+                        }}>{property.created_by.user_profile.user.name}</h1> : " "}
+                     
                       <p style={{ fontSize: "13px", color: "#636363" }}>
                         LandLord
                       </p>
@@ -237,9 +234,7 @@ const PropertyScreen = ({ match }) => {
                         <h1 style={{ fontSize: "17px", fontWeight: "700" }}>
                           {property.title}
                         </h1>
-                        <p style={{ color: "#636363" }}>
-                          {property.city}, {property.state}
-                        </p>
+                        {property.address ? <h1>{property.address.city}, {property.address.state}</h1> : " "}
 
                         <h1
                           style={{
@@ -279,9 +274,7 @@ const PropertyScreen = ({ match }) => {
                         <h1 style={{ fontSize: "17px", fontWeight: "700" }}>
                           {property.title}
                         </h1>
-                        <p style={{ color: "#636363" }}>
-                          {property.city}, {property.state}
-                        </p>
+                        {property.address ? <h1>{property.address.city}, {property.address.state}</h1> : " "}
 
                         <h1
                           style={{
@@ -321,9 +314,7 @@ const PropertyScreen = ({ match }) => {
                         <h1 style={{ fontSize: "17px", fontWeight: "700" }}>
                           {property.title}
                         </h1>
-                        <p style={{ color: "#636363" }}>
-                          {property.city}, {property.state}
-                        </p>
+                        {property.address ? <h1>{property.address.city}, {property.address.state}</h1> : " "}
 
                         <h1
                           style={{
@@ -363,9 +354,7 @@ const PropertyScreen = ({ match }) => {
                         <h1 style={{ fontSize: "17px", fontWeight: "700" }}>
                           {property.title}
                         </h1>
-                        <p style={{ color: "#636363" }}>
-                          {property.city}, {property.state}
-                        </p>
+                        {property.address ? <h1>{property.address.city}, {property.address.state}</h1> : " "}
 
                         <h1
                           style={{
@@ -659,6 +648,7 @@ const PropertyScreen = ({ match }) => {
           </Row>
         </Container>
       </div>
+      
     </div>
   );
 };

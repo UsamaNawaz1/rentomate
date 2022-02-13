@@ -5,14 +5,17 @@ import {
   PROPERTY_DETAILS_REQUEST,
   PROPERTY_DETAILS_SUCCESS,
   PROPERTY_DETAILS_FAIL,
+  PROPERTY_LANDLORD_REQUEST,
+  PROPERTY_LANDLORD_SUCCESS,
+  PROPERTY_LANDLORD_FAIL,
 } from "../constants/propertyConstants";
 import axios from "axios";
 
-export const listProperties = () => async (dispatch) => {
+export const listProperties = (keyword='', property_type='', no_of_beds=2, no_of_baths=3, minValue=10000, maxValue=300000) => async (dispatch) => {
   try {
     dispatch({ type: PROPERTY_LIST_REQUEST });
 
-    const { data } = await axios.get("/api/properties/");
+    const { data } = await axios.get(`/api/properties/?keyword=${keyword}&rent__gt=${minValue}&rent__lt=${maxValue}&no_of_beds=${no_of_beds}&no_of_baths=${no_of_baths}&property_type=${property_type}`);
 
     dispatch({ type: PROPERTY_LIST_SUCCESS, payload: data });
   } catch (error) {
@@ -36,6 +39,25 @@ export const listPropertyDetails = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: PROPERTY_DETAILS_FAIL,
+      payload:
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
+    });
+  }
+};
+
+
+export const listLandlordProperties = (token) => async (dispatch) => {
+  try {
+    dispatch({ type: PROPERTY_LANDLORD_REQUEST });
+
+    const { data } = await axios.get(`/api/landlordProperties`, {headers: {"Authorization": `Bearer ${token}`}});
+
+    dispatch({ type: PROPERTY_LANDLORD_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: PROPERTY_LANDLORD_FAIL,
       payload:
         error.response && error.response.data.detail
           ? error.response.data.detail

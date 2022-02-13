@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { PropertyContext } from '../Contexts/PropertyContext';
 import Property from "../components/Property";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
@@ -10,6 +11,8 @@ import {
   RangeSliderThumb,
 } from "@chakra-ui/react";
 
+import { useHistory } from 'react-router-dom'
+
 import { useDispatch, useSelector } from "react-redux";
 import { listProperties } from "../actions/propertyActions";
 
@@ -17,12 +20,22 @@ const ViewPropertyScreen = () => {
   const dispatch = useDispatch();
   const propertyList = useSelector((state) => state.propertyList);
   const { error, loading, properties } = propertyList;
-  const [minValue, setMinValue] = useState(10000);
-  const [maxValue, setMaxValue] = useState(300000);
+  // const [minValue, setMinValue] = useState(10000);
+  // const [maxValue, setMaxValue] = useState(300000);
+  // const [keyword, setKeyword] = useState('');
 
+  // const [propertyType, setPropertyType] = useState('');
+  // const [bedrooms, setBedrooms] = useState(2);
+  // const [baths, setBaths] = useState(3);
+ 
+  const {minValue, setMinValue, maxValue, setMaxValue, keyword, setKeyword, propertyType, setPropertyType, bedrooms, setBedrooms, baths, setBaths} = useContext(PropertyContext);
+  
+ 
   useEffect(() => {
-    dispatch(listProperties());
-  }, [dispatch]);
+    dispatch(listProperties(keyword, propertyType, bedrooms, baths, minValue, maxValue));
+  }, [dispatch, keyword, minValue, maxValue, bedrooms, baths, propertyType]);
+
+
 
   return (
     <div>
@@ -41,6 +54,8 @@ const ViewPropertyScreen = () => {
               <Form.Group className="mb-3">
                 <Form.Control
                   type="text"
+                  value={keyword}
+                  onChange={ (e) => setKeyword(e.target.value)}
                   placeholder="Search Properties..."
                   style={{ color: "#636363" }}
                 />
@@ -58,6 +73,7 @@ const ViewPropertyScreen = () => {
                       width: "100%",
                       boxShadow: "none",
                     }}
+                    onClick={(e) => setPropertyType('House')}
                   >
                     House
                   </Button>
@@ -75,6 +91,7 @@ const ViewPropertyScreen = () => {
                       color: "Black",
                       boxShadow: "none",
                     }}
+                    onClick={(e) => setPropertyType('Hostel')}
                   >
                     Hostel
                   </Button>
@@ -93,6 +110,7 @@ const ViewPropertyScreen = () => {
                       color: "Black",
                       boxShadow: "none",
                     }}
+                    onClick={(e) => setPropertyType('Apartment')}
                   >
                     Apartment
                   </Button>
@@ -110,6 +128,7 @@ const ViewPropertyScreen = () => {
                       color: "Black",
                       boxShadow: "none",
                     }}
+                    onClick={(e) => setPropertyType('Plot')}
                   >
                     Plot
                   </Button>
@@ -131,6 +150,7 @@ const ViewPropertyScreen = () => {
                       margin: "auto",
                       textAlign: "center",
                     }}
+                    onClick={(e) => setBedrooms(1)}
                   >
                     1
                   </Button>
@@ -147,6 +167,7 @@ const ViewPropertyScreen = () => {
                       margin: "auto",
                       textAlign: "center",
                     }}
+                    onClick={(e) => setBedrooms(2)}
                   >
                     2
                   </Button>
@@ -164,6 +185,7 @@ const ViewPropertyScreen = () => {
                       margin: "auto",
                       textAlign: "center",
                     }}
+                    onClick={(e) => setBedrooms(3)}
                   >
                     3
                   </Button>
@@ -181,6 +203,7 @@ const ViewPropertyScreen = () => {
                       margin: "auto",
                       textAlign: "center",
                     }}
+                    onClick={(e) => setBedrooms(4)}
                   >
                     4
                   </Button>
@@ -203,6 +226,7 @@ const ViewPropertyScreen = () => {
                       margin: "auto",
                       textAlign: "center",
                     }}
+                    onClick={(e) => setBaths(1)}
                   >
                     1
                   </Button>
@@ -220,6 +244,7 @@ const ViewPropertyScreen = () => {
                       margin: "auto",
                       textAlign: "center",
                     }}
+                    onClick={(e) => setBaths(2)}
                   >
                     2
                   </Button>
@@ -236,6 +261,7 @@ const ViewPropertyScreen = () => {
 
                       textAlign: "center",
                     }}
+                    onClick={(e) => setBaths(3)}
                   >
                     3
                   </Button>
@@ -253,6 +279,7 @@ const ViewPropertyScreen = () => {
                       margin: "auto",
                       textAlign: "center",
                     }}
+                    onClick={(e) => setBaths(4)}
                   >
                     4
                   </Button>
@@ -277,9 +304,10 @@ const ViewPropertyScreen = () => {
                     max={500000}
                     min={5000}
                     step={10000}
-                    onChange={([Min, Max]) => {
+                    onChangeEnd={([Min, Max]) => {
                       setMinValue(parseInt(Min));
                       setMaxValue(Max);
+                     
                     }}
                   >
                     <RangeSliderTrack>
@@ -368,77 +396,6 @@ const ViewPropertyScreen = () => {
 
         <Col className="right" style={{ backgroundColor: "#f4f5f9" }}>
           <Container>
-            {/* <Row style={{ marginTop: "70px" }}>
-              <Col lg={6} md={6} xs={12}>
-                <a href={`/property/${singleProperty._id}`}>
-                  <Image src={singleProperty.image} fluid />
-                </a>
-              </Col>
-
-              <Col
-                lg={6}
-                md={6}
-                xs={12}
-                style={{
-                  paddingTop: "15px",
-                  backgroundColor: "white",
-                  marginLeft: "0px",
-                }}
-              >
-                <Container>
-                  <h1 style={{ fontSize: "20px", fontWeight: "700" }}>
-                    {singleProperty.address}
-                  </h1>
-                  <h4>
-                    {singleProperty.city}, {singleProperty.state}
-                  </h4>
-                  <Row style={{ marginTop: "14px" }}>
-                    <Col
-                      lg={2}
-                      md={2}
-                      xs={4}
-                      style={{ textAlign: "center", marginLeft: "-8px" }}
-                    >
-                      {" "}
-                      <i style={{ fontSize: "20px" }} class="fas fa-bed"></i>
-                      <p style={{ fontSize: "12px" }}>{singleProperty.beds}</p>
-                    </Col>
-                    <Col lg={2} md={2} xs={4} style={{ textAlign: "center" }}>
-                      {" "}
-                      <i style={{ fontSize: "20px" }} class="fas fa-bath"></i>
-                      <p style={{ fontSize: "12px" }}>{singleProperty.baths}</p>
-                    </Col>
-                    <Col lg={2} md={2} xs={4} style={{ textAlign: "center" }}>
-                      {" "}
-                      <i
-                        style={{ fontSize: "20px" }}
-                        class="fas fa-chart-area"
-                      ></i>
-                      <p style={{ fontSize: "12px" }}>{singleProperty.area}</p>
-                    </Col>
-                  </Row>
-                  <br></br>
-                  <h5 style={{ fontSize: "15px" }}>
-                    Look no further as we have listed the best Bungalow just for
-                    you! This could be your chance to buy such a precious real
-                    estate asset. Don't miss out on these 7 Marla units.{" "}
-                  </h5>
-                  <br></br>
-                  <h5 style={{ fontSize: "15px" }}>
-                    Look no further as we have listed the best Bungalow just for
-                    you! This could be your chance to buy such a precious real
-                    estate asset. Don't miss out on these 7 Marla units.{" "}
-                  </h5>
-                  <br></br>
-                  <h5 style={{ fontSize: "15px" }}>
-                    Look no further as we have listed the best Bungalow just for
-                    you! This could be your chance to buy such a precious real
-                    estate asset. Don't miss out on these 7 Marla units.{" "}
-                  </h5>
-                </Container>
-              </Col>
-            </Row> */}
-
             <Row style={{ marginTop: "60px" }}>
               {loading ? (
                 <Loader />

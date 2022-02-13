@@ -50,18 +50,18 @@ const Property = ({ property }) => {
             textTransform="uppercase"
             ml="2"
           >
-            {property.beds} beds &bull; {property.baths} baths
+            {property.no_of_beds} beds &bull; {property.no_of_baths} baths
           </Box>
         </Box>
 
         <Box
           mt="1"
           fontWeight="semibold"
-          as="h4"
+          as="h5"
           lineHeight="tight"
           isTruncated
         >
-          {property.address}
+          {property.title}
         </Box>
 
         <Box style={{ color: "#0290f1", fontWeight: "700" }}>

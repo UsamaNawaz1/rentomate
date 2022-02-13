@@ -48,7 +48,8 @@ class Property(models.Model):
     no_of_baths = models.IntegerField(default=0, null=False)
     no_of_beds = models.IntegerField(default=0, null=False)
     rent = models.DecimalField(max_digits=8,default=0, null=False, decimal_places=2)
-
+    property_type = models.CharField(max_length=200, null=False, default='House')
+    status = models.CharField(max_length=255, default='Active')
     def __str__(self):
         return self.title
 
