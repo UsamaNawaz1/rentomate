@@ -6,6 +6,10 @@ node_modules/
 .pnp.js
 
 venv/
+env/
+backend/backend/__pycache__/
+backend/base/__pycache__/
+backend/base/migrations/__pycache__/
 
 # testing
 /coverage

@@ -18,6 +18,10 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 from .serializers import LandLordSerializer, PropertySerializer, TenantSerializer, UserProfileSerializer, UserSerializer, UserSerializerWithToken
 
+from rest_framework_swagger.views import get_swagger_view
+
+schema_view = get_swagger_view(title='API')
+
 
 
 

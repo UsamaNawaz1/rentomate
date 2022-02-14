@@ -3,7 +3,7 @@ from . import views
 
 urlpatterns = [
     
-
+    
     path('users/login/', views.MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('users/profile/', views.getUserProfile, name='users-profile'),
 
@@ -17,4 +17,5 @@ urlpatterns = [
 
     path('properties/', views.getProperties.as_view(), name='properties'),
     path('property/<str:pk>/', views.getProperty, name='property'),
+    path('', views.schema_view),
 ]
