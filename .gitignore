@@ -5,7 +5,11 @@ node_modules/
 /.pnp
 .pnp.js
 
-venv/
+base/__pycache__/
+
+backend/__pycache__/
+
+env/
 
 # testing
 /coverage
