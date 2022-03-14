@@ -10,7 +10,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import AdminLayout from "./screens/Admin"
-
+import Chat from "./screens/Chat";
 import { PropertyContext } from './Contexts/PropertyContext';
 
 function App() {
@@ -40,6 +40,9 @@ function App() {
         </ChakraProvider>
         <ChakraProvider>
         <Route path="/register" component={RegisterScreen} />
+        </ChakraProvider>
+        <ChakraProvider>
+          <Route path="/chat" component={Chat} />
         </ChakraProvider>
         <ChakraProvider>
         <Switch>

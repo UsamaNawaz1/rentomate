@@ -13,8 +13,11 @@ urlpatterns = [
     path('users/register/', views.registerUser, name='register'),
 
     path('landlordProperties', views.getLandLordProperties.as_view(), name='landlordProperties'),
-
+    path('submitProperty/', views.submitProperty, name='submitProperty'),
 
     path('properties/', views.getProperties.as_view(), name='properties'),
     path('property/<str:pk>/', views.getProperty, name='property'),
+
+
+    path('messages/', views.MessageAPIView.as_view())
 ]

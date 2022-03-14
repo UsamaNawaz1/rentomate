@@ -25,7 +25,7 @@ function Dashboard() {
   const userLogin = useSelector((state) => state.userLogin);
   const {userInfo} = userLogin;
   const { error, loading, landlord_properties } = landlordProperties;
-  
+  const total_props = landlord_properties.length;
   useEffect(()=> {
     dispatch(listLandlordProperties(userInfo.user_profile.user.token))
   }, [dispatch, userInfo]);
@@ -45,7 +45,7 @@ function Dashboard() {
                   <Col xs="7">
                     <div className="numbers">
                       <p className="card-category">Listed Properties</p>
-                      <Card.Title as="h4">{userInfo.listed_properties}</Card.Title>
+                      <Card.Title as="h4">{total_props}</Card.Title>
                     </div>
                   </Col>
                 </Row>
@@ -54,7 +54,7 @@ function Dashboard() {
                 <hr></hr>
                 <div className="stats">
                   <i className="fas fa-redo mr-1"></i>
-                  Update Now
+                  Verified
                 </div>
               </Card.Footer>
             </Card>
@@ -97,7 +97,7 @@ function Dashboard() {
                   <Col xs="7">
                     <div className="numbers">
                       <p className="card-category">Already On Rent</p>
-                      <Card.Title as="h4">23</Card.Title>
+                      <Card.Title as="h4">0</Card.Title>
                     </div>
                   </Col>
                 </Row>
@@ -106,14 +106,14 @@ function Dashboard() {
                 <hr></hr>
                 <div className="stats">
                   <i className="far fa-clock-o mr-1"></i>
-                  In the last hour
+                  Verified
                 </div>
               </Card.Footer>
             </Card>
           </Col>
           
         </Row>
-        <Row>
+        {/* <Row>
           <Col md="8">
             <Card>
               <Card.Header>
@@ -220,7 +220,7 @@ function Dashboard() {
               </Card.Body>
             </Card>
           </Col>
-        </Row>
+        </Row> */}
         <TableList />
       </Container>
     </>

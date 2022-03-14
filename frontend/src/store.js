@@ -4,7 +4,8 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import {
   propertyListReducer,
   propertyDetailsReducer,
-  propertyLandlordReducer
+  propertyLandlordReducer,
+  submitPropertydReducer
 
 } from "./reducers/propertyReducers";
 
@@ -17,7 +18,8 @@ const reducer = combineReducers({
   userRegister: userRegisterReducers,
   landlordProperties: propertyLandlordReducer,
   userDetail: userDetailReducers,
-  userUpdate: userUpdateReducers
+  userUpdate: userUpdateReducers,
+  submitProperty: submitPropertydReducer
 });
 
 

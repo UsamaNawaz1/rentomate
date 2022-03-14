@@ -13,39 +13,66 @@ import {
   Row,
   Col,
 } from "react-bootstrap";
-import { updateUser } from "../actions/userActions.js";
+import Loader from "../components/Loader";
+import Message from "../components/Message";
+import { submitProperty } from '../actions/propertyActions.js';
+
 
 function SubmitNewProperty() {
 
   const userLogin = useSelector((state) => state.userLogin);
-  const dispatch = useDispatch();
   const {userInfo} = userLogin;
 
-  const [email, setEmail] = useState('')
-  // const [CNIC, setCNIC] = useState('')
-  const [name, setName] = useState('')
-  const [phone, setPhone] = useState('')
+  const addProperty = useSelector((state) => state.submitProperty);
+  const dispatch = useDispatch();
+  const {loading, error, submit_property} = addProperty;
+
+  const [title, setTitle] = useState('')
+  const [rent, setRent] = useState(0)
+  const [property_type, setProperty_type] = useState('House')
+  const [beds, setBeds] = useState('')
+  const [baths, setBaths] = useState('')
+  const [images, setImages] = useState()
+  const [area, setArea] = useState('')
+  const [city, setCity] = useState('Lahore')
+  const [state, setState] = useState('Punjab')
   const [street, setStreet] = useState('')
-  const [city, setCity] = useState('')
-  const [state, setState] = useState('')
-  const [role, setRole] = useState('')
+  const [zip, setZip] = useState('')
+  const [description, setDescription] = useState('')
 
+  
 
-  useEffect(()=>{
-    if(userInfo){
-      setEmail(userInfo.user_profile.user.email)
-      setName(userInfo.user_profile.user.name)
-      setPhone(userInfo.user_profile.phone_number)
-      setStreet(userInfo.user_profile.address.street)
-      setCity(userInfo.user_profile.address.city)
-      setState(userInfo.user_profile.address.state)
-      setRole(userInfo.user_profile.address.role)
-    }
-  })
+  // useEffect(()=>{
+  //   if(userInfo){
+  //     setEmail(userInfo.user_profile.user.email)
+  //     setName(userInfo.user_profile.user.name)
+  //     setPhone(userInfo.user_profile.phone_number)
+  //     setStreet(userInfo.user_profile.address.street)
+  //     setCity(userInfo.user_profile.address.city)
+  //     setState(userInfo.user_profile.address.state)
+  //     setRole(userInfo.user_profile.address.role)
+  //   }
+  // })
 
-  const submitHandler = () => {
-    console.log(phone);
-    dispatch(updateUser(userInfo.user_profile.user.token, email, phone))
+  const submitHandler = (e) => {
+    console.log('hello in submitHandler');
+    console.log(images);
+    e.preventDefault();
+    let formData = new FormData();
+    formData.append('title', title);
+    formData.append('rent', rent);
+    formData.append('property_type', property_type);
+    formData.append('beds', beds);
+    formData.append('baths', baths);
+    formData.append('area', area);
+    formData.append('city', city);
+    formData.append('state', state);
+    formData.append('zip', zip);
+    formData.append('description', description);
+    formData.append('street', street);
+    formData.append('images', images);
+    
+    dispatch(submitProperty(formData,userInfo.user_profile.user.token))
   }
 
   return (
@@ -58,16 +85,19 @@ function SubmitNewProperty() {
                 <Card.Title as="h4">List New Property</Card.Title>
               </Card.Header>
               <Card.Body>
+                
+                {error && <Message status="error">{error}</Message>}
+                {loading && <Loader />}
                 <Form onSubmit={submitHandler}>
                 <Row>
                     <Col className="pr-1" md="6">
                       <Form.Group>
                         <label>Title</label>
                         <Form.Control
-                          defaultValue={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          placeholder="name@email.com"
-                          type="email"
+                          defaultValue=""
+                          onChange={(e) => setTitle(e.target.value)}
+                          placeholder="Enter title for property"
+                          type="text"
                           required
                         ></Form.Control>
                       </Form.Group>
@@ -76,7 +106,7 @@ function SubmitNewProperty() {
                       <Form.Group>
                         <label>Rent</label>
                         <Form.Control
-                          
+                          onChange={(e) => setRent(e.target.value)}
                           placeholder="Enter the desired rent"
                           type="number"
                           required
@@ -88,10 +118,11 @@ function SubmitNewProperty() {
                     <Col className="pr-1" md="4">
                       <Form.Group>
                         <label>Property Type</label>
-                        <Form.Select aria-label="Default select example" required>
+                        
+                        <Form.Select aria-label="Default select example" as="select" value={property_type} onChange={(e) => setProperty_type(e.target.value)} required>
                         
                             
-                            <option value="House" selected>House</option>
+                            <option value="House">House</option>
                             <option value="Apartment">Apartment</option>
                             <option value="Plot">Plot</option>
                             <option value="Hostel">Hostel</option>
@@ -103,9 +134,10 @@ function SubmitNewProperty() {
                       <Form.Group>
                         <label>Bedrooms</label>
                         <Form.Control
-
+                          onChange={(e) => setBeds(e.target.value)}
                           placeholder="Number of Bedrooms"
                           type="number"
+                          required
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -113,9 +145,24 @@ function SubmitNewProperty() {
                       <Form.Group>
                         <label>Washrooms</label>
                         <Form.Control
-
+                          onChange={(e) => setBaths(e.target.value)}
                           placeholder="Number of Washrooms"
                           type="number"
+                          required
+                        ></Form.Control>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col md="12">
+                      <Form.Group>
+                        <label>Address</label>
+                        <Form.Control
+                          
+                          onChange={(e) => setStreet(e.target.value)}
+                          placeholder="Enter the Address (e.g Street #01, Park View)"
+                          type="text"
+                          required
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -125,21 +172,22 @@ function SubmitNewProperty() {
                       <Form.Group>
                         <label>Area in Marlas</label>
                         <Form.Control
-                          defaultValue={street}
-                          onChange={(e) => setStreet(e.target.value)}
+                          
+                          onChange={(e) => setArea(e.target.value)}
                           placeholder="Enter the Total Area (Marlas)"
                           type="number"
+                          required
                         ></Form.Control>
                       </Form.Group>
                     </Col>
                     <Col className="pr-1" md="4">
                       <Form.Group>
                         <label>City</label>
-                        <Form.Select aria-label="Default select example" required>
+                        <Form.Select aria-label="Default select example" value={city} as="select" onChange={(e) => setCity(e.target.value)} required>
                         
                             
                         
-                            <option value="" disabled selected>Select The City</option>
+                            
                             <option value="Islamabad">Islamabad</option>
                             <option value="" disabled>Punjab Cities</option>
                             <option value="Ahmed Nager Chatha">Ahmed Nager Chatha</option>
@@ -196,7 +244,7 @@ function SubmitNewProperty() {
                             <option value="Khushab">Khushab</option>
                             <option value="Kot Addu">Kot Addu</option>
                             <option value="Jauharabad">Jauharabad</option>
-                            <option value="Lahore" selected>Lahore</option>
+                            <option value="Lahore">Lahore</option>
                             <option value="Lalamusa">Lalamusa</option>
                             <option value="Layyah">Layyah</option>
                             <option value="Liaquat Pur">Liaquat Pur</option>
@@ -389,10 +437,10 @@ function SubmitNewProperty() {
                     <Col className="pr-1" md="4">
                       <Form.Group>
                         <label>State</label>
-                        <Form.Select aria-label="Default select example" required>
+                        <Form.Select aria-label="Default select example" value={state} as="select" onChange={(e) => setState(e.target.value)} required>
                         
                             
-                            <option value="Punjab" selected>Punjab</option>
+                            <option value="Punjab">Punjab</option>
                             <option value="Azad Kashmir">Azad Kashmir</option>
                             <option value="Balochistan">Balochistan</option>
                             <option value="Federal Administered Tribal Areas">Federal Administered Tribal Areas</option>
@@ -409,15 +457,18 @@ function SubmitNewProperty() {
                       <Form.Group>
                         <label>Zip Code</label>
                         <Form.Control
+                          onChange={(e) => setZip(e.target.value)}
                           placeholder="Zip Code"
                           type="number"
+                          required
                         ></Form.Control>
                       </Form.Group>
                     </Col>
                     <Col className="px-1" md="8">
                     <Form.Group controlId="formFileMultiple" className="mb-3">
+
                         <Form.Label>Add Property Images</Form.Label>
-                        <Form.Control type="file" multiple />
+                        <Form.Control onChange={(e) => setImages(e.target.files[0])}  type="file" />
                     </Form.Group>
                     </Col>
                    
@@ -428,7 +479,7 @@ function SubmitNewProperty() {
                         <label>Property Description</label>
                         <Form.Control
                           cols="80"
-                          
+                          onChange={(e) => setDescription(e.target.value)}
                           placeholder="Write a brief description about the property"
                           rows="4"
                           as="textarea"
@@ -440,7 +491,7 @@ function SubmitNewProperty() {
                     className="btn-fill pull-right"
                     type="submit"
                     variant="primary"
-                  
+                    style={{textTransform:"none"}}
                   >
                     Add new property
                   </Button>

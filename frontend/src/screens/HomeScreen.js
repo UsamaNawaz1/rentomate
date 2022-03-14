@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { PropertyContext } from '../Contexts/PropertyContext';
 import { Container, Row, Col, Image, Button, Form } from "react-bootstrap";
-import {} from "@chakra-ui/react";
 
+import { Link } from 'react-router-dom';
 import HeroImage from "../images/hero-bg2.png";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -155,7 +155,7 @@ const HomeScreen = () => {
                 >
                   Choose a price range
                 </h8>
-                <LinkContainer to='/properties'>
+                <Link to='/properties'>
                   <Button
                     style={{
                       float: "right",
@@ -165,7 +165,7 @@ const HomeScreen = () => {
                   >
                     <i style={{ fontSize: "20px" }} class="fas fa-search"></i>
                   </Button>
-                </LinkContainer>
+                </Link>
                 
               </Col>
             </Col>
@@ -244,6 +244,7 @@ const HomeScreen = () => {
                   color: "#7A7A7A",
                   wordSpacing: "3px",
                   lineHeight: "30px",
+                  textTransform:"none"
                 }}
               >
                 From lease documents to invoices, keep track of all documents on
@@ -260,11 +261,12 @@ const HomeScreen = () => {
                   textAlign: "center",
                   justifyContent: "center",
                   display: "flex",
+                  textTransform:"none"
                 }}
               >
                 <i
                   class="fas fa-money-check"
-                  style={{ margin: "auto", fontSize: "25px", color: "#38A7F5" }}
+                  style={{ textAlign:"center", marginLeft:"-10px", marginTop:"17px", fontSize: "25px", color: "#38A7F5" }}
                 ></i>
               </div>
               <br></br>
@@ -274,6 +276,7 @@ const HomeScreen = () => {
                   color: "#7A7A7A",
                   wordSpacing: "3px",
                   lineHeight: "30px",
+                  textTransform:"none"
                 }}
               >
                 Let’s eliminate hectic process of managing rentals. Pay &
@@ -290,6 +293,7 @@ const HomeScreen = () => {
                   textAlign: "center",
                   justifyContent: "center",
                   display: "flex",
+                  
                 }}
               >
                 <i
@@ -304,6 +308,7 @@ const HomeScreen = () => {
                   color: "#7A7A7A",
                   wordSpacing: "3px",
                   lineHeight: "30px",
+                  textTransform:"none"
                 }}
               >
                 Rather than a call when you’re at dinner with family, learn
@@ -346,19 +351,22 @@ const HomeScreen = () => {
                   It can never depreciate like a car or washing machine. Land
                   will only double its value in ten years.
                 </h3>
-
+                <Link to="/register">
                 <Button
                   style={{
-                    backgroundColor: "white",
+                    backgroundColor: "white" ,
                     color: "#0290F1",
                     fontSize: "13px",
                     padding: "5px 25px 5px 25px",
                     textDecoration: "none",
                     boxShadow: "none",
+                    textTransform:"none",
                   }}
                 >
                   Join Us Now
                 </Button>
+                </Link>
+                
               </Col>
               <Col>
                 <Image style={{ float: "right" }} src={HeroHomeFour} />

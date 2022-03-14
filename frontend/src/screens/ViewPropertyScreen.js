@@ -35,7 +35,12 @@ const ViewPropertyScreen = () => {
     dispatch(listProperties(keyword, propertyType, bedrooms, baths, minValue, maxValue));
   }, [dispatch, keyword, minValue, maxValue, bedrooms, baths, propertyType]);
 
-
+  const reset = () => {
+    setKeyword('');
+    setPropertyType('');
+    setBedrooms(2);
+    setBaths(3);
+  }
 
   return (
     <div>
@@ -57,11 +62,11 @@ const ViewPropertyScreen = () => {
                   value={keyword}
                   onChange={ (e) => setKeyword(e.target.value)}
                   placeholder="Search Properties..."
-                  style={{ color: "#636363" }}
+                  style={{ color: "#636363", textTransform:"none" }}
                 />
               </Form.Group>
 
-              <h6 style={{ color: "#636363" }}>Property Type</h6>
+              <h6 style={{ color: "#636363", textTransform:"none" }}>Property Type</h6>
 
               <Row style={{ marginTop: "20px" }}>
                 <Col lg={6} md={6} xs={12}>
@@ -135,7 +140,7 @@ const ViewPropertyScreen = () => {
                 </Col>
               </Row>
               <br></br>
-              <h6 style={{ color: "#636363" }}>Bedrooms</h6>
+              <h6 style={{ color: "#636363", textTransform:"none" }}>Bedrooms</h6>
               <Row style={{ marginTop: "20px" }}>
                 <Col lg={3} md={3} xs={6}>
                   <Button
@@ -211,7 +216,7 @@ const ViewPropertyScreen = () => {
               </Row>
 
               <br></br>
-              <h6 style={{ color: "#636363" }}>Bathrooms</h6>
+              <h6 style={{ color: "#636363", textTransform:"none" }}>Bathrooms</h6>
               <Row style={{ marginTop: "20px" }}>
                 <Col lg={3} md={3} xs={6}>
                   <Button
@@ -286,7 +291,7 @@ const ViewPropertyScreen = () => {
                 </Col>
               </Row>
               <br></br>
-              <h6 style={{ color: "#636363" }}>Price Range</h6>
+              <h6 style={{ color: "#636363", textTransform:"none" }}>Price Range</h6>
               <p
                 style={{
                   fontSize: "12px",
@@ -319,7 +324,7 @@ const ViewPropertyScreen = () => {
                 </Col>
               </Row>
               <br></br>
-              <h6 style={{ color: "#636363" }}>Amenities</h6>
+              {/* <h6 style={{ color: "#636363", textTransform:"none" }}>Amenities</h6>
               <Row style={{ marginTop: "20px" }}>
                 <Col lg={2} md={2} xs={4}>
                   <Form.Check
@@ -332,8 +337,8 @@ const ViewPropertyScreen = () => {
                     Water Supply
                   </h6>
                 </Col>
-              </Row>
-              <Row style={{ marginTop: "10px" }}>
+              </Row> */}
+              {/* <Row style={{ marginTop: "10px" }}>
                 <Col lg={2} md={2} xs={4}>
                   <Form.Check
                     aria-label="option 1"
@@ -372,7 +377,7 @@ const ViewPropertyScreen = () => {
                   </h6>
                 </Col>
               </Row>
-              <br></br>
+              <br></br> */}
               <Row>
                 <Col lg={12} md={12} xs={12}>
                   <Button
@@ -385,6 +390,7 @@ const ViewPropertyScreen = () => {
                       backgroundColor: "#F8F7F7",
                       color: "Black",
                     }}
+                    onClick={reset}
                   >
                     Reset
                   </Button>

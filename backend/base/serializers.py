@@ -44,10 +44,10 @@ class UserSerializerWithToken(UserSerializer):
 
 class UserProfileSerializer(serializers.ModelSerializer):
     user = UserSerializerWithToken(many=False)
-    address = AddressSerializer(many=False)
+    
     class Meta:
         model = UserProfile
-        fields = ['user', 'phone_number', 'user_type', 'address']
+        fields = ['user', 'phone_number', 'user_type', 'address', 'description', 'cnic', 'image']
 
 class TenantSerializer(serializers.ModelSerializer):
     user_profile = UserProfileSerializer(many=False)
@@ -66,9 +66,11 @@ class LandLordSerializer(serializers.ModelSerializer):
 class PropertySerializer(serializers.ModelSerializer):
     created_by = LandLordSerializer(many=False)
     address = AddressSerializer(many=False)
-    
+    # image = serializers.SerializerMethodField(method_name='image_url')
     class Meta:
         model = Property
-        fields = ['id', 'created_by', 'title', 'description', 'image', 'address', 'created_on', 'total_area', 'no_of_baths', 'no_of_beds', 'rent']
+        fields = ['id', 'created_by', 'title', 'image', 'description', 'address', 'created_on', 'total_area', 'no_of_baths', 'no_of_beds', 'rent', 'longitude', 'latitude']
 
-    
+    # def image_url(self, property: Property):
+    #     image = property.image.url
+    #     return image

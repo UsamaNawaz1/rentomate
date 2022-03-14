@@ -5,7 +5,7 @@ import Logo from "../images/rentomate.png";
 import { LinkContainer } from "react-router-bootstrap";
 import {logout} from '../actions/userActions'
 import  { Redirect } from 'react-router-dom'
-
+import { Link } from 'react-router-dom';
 
 const Header = () => {
 
@@ -41,9 +41,9 @@ const Header = () => {
               <LinkContainer to="/properties">
                 <Nav.Link>View Properties</Nav.Link>
               </LinkContainer>
-              <LinkContainer to="/howitworks">
+              {/* <LinkContainer to="/howitworks">
                 <Nav.Link>How it works</Nav.Link>
-              </LinkContainer>
+              </LinkContainer> */}
 
               {userInfo && (
                 <LinkContainer to="/admin/dashboard">
@@ -54,7 +54,7 @@ const Header = () => {
               {userInfo ? (
                 
                 <NavDropdown title={userInfo.user_profile.user.name} id='username'>
-                  <LinkContainer to='/profile'><NavDropdown.Item>Profile</NavDropdown.Item></LinkContainer>
+                  <LinkContainer to='/admin/user'><NavDropdown.Item>Profile</NavDropdown.Item></LinkContainer>
                   <LinkContainer to="/"><NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item></LinkContainer>
                   
                 
@@ -69,15 +69,17 @@ const Header = () => {
               )}
               
               {!userInfo && (
-                
+                <Link to="/register">
                 <Button
                 style={{
                   fontSize: "13px",
                   padding: "10px 30px 10px 30px",
                   margin: "8px 5px 8px 40px",
+                  textTransform:"none"
                 }}>
                 Sign Up
                 </Button>
+                </Link>
               )}
               
 

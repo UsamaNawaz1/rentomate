@@ -14,9 +14,19 @@ const PropertyScreen = ({ match }) => {
   const dispatch = useDispatch();
   const productDetails = useSelector((state) => state.propertyDetails);
   const { loading, error, property } = productDetails;
+  var temp_frame = '';
+ 
+  
+ 
   useEffect(() => {
     dispatch(listPropertyDetails(match.params.id));
   }, [dispatch]);
+
+  temp_frame = (property.address) ? `https://maps.google.com/maps?q=${property.latitude},${property.longitude}&hl=es;z=14&amp&output=embed` : '';
+  // if(property.address != 'undefined'){
+  //   temp_frame = `https://www.google.com/maps/embed/v1/place?key=AIzaSyBzNE1vOVvX7hsBv7mA-IiC_fVpjQYxjBo&q=${property.address.state}`
+  // }
+  console.log(temp_frame);
   return (
     
     <div>
@@ -38,8 +48,8 @@ const PropertyScreen = ({ match }) => {
             <Carousel.Item as="div" style={{ width: "100%", height: "60vh" }}>
               <Image
                 style={{ width: "100%", height: "100%" }}
-                src={HeroImage}
-                alt="Second slide"
+                src={property.image}
+                alt="First slide"
                 fluid
               />
             </Carousel.Item>
@@ -47,7 +57,7 @@ const PropertyScreen = ({ match }) => {
               <Image
                 style={{ width: "100%", height: "100%" }}
                 src={property.image}
-                alt="Third slide"
+                alt="First slide"
                 fluid
               />
             </Carousel.Item>
@@ -140,6 +150,7 @@ const PropertyScreen = ({ match }) => {
                           textAlign: "center",
                           width: "100%",
                           boxShadow: "none",
+                          textTransform:"none"
                         }}
                       >
                         <i
@@ -154,6 +165,7 @@ const PropertyScreen = ({ match }) => {
                           width: "100%",
                           boxShadow: "none",
                           backgroundColor: "#52B167",
+                          textTransform:"none"
                         }}
                       >
                         <i
@@ -185,9 +197,10 @@ const PropertyScreen = ({ match }) => {
                       >
                         Location
                       </h1>
-
+                      
                       <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3305.01422415617!2d72.64194641552051!3d34.06914962428575!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38def93c5797c0d7%3A0x95445985be9ab625!2sGhulam%20Ishaq%20Khan%20Institute%20of%20Engineering%20Sciences%20and%20Technology!5e0!3m2!1sen!2s!4v1640521095415!5m2!1sen!2s"
+                        // src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3305.01422415617!2d72.64194641552051!3d34.06914962428575!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38def93c5797c0d7%3A0x95445985be9ab625!2sGhulam%20Ishaq%20Khan%20Institute%20of%20Engineering%20Sciences%20and%20Technology!5e0!3m2!1sen!2s!4v1640521095415!5m2!1sen!2s"
+                        src={temp_frame}
                         allowfullscreen=""
                         style={{
                           width: "100%",
@@ -640,6 +653,7 @@ const PropertyScreen = ({ match }) => {
                   boxShadow: "none",
                   float: "right",
                   marginTop: "45px",
+                  textTransform:"none"
                 }}
               >
                 Contact Us Now

@@ -61,10 +61,10 @@ function TableList() {
                           <td>{property.title}</td>
                           <td>{property.created_on}</td>
                           <td>PKR {property.rent}</td>
-                          <td><Button className="btn-sm btn-primary">Active</Button></td>
+                          <td><Button className="btn-sm btn-primary" style={{textTransform:"none"}}>Active</Button></td>
                           <td>{property.address.city}</td>
                           <td>{property.address.state}</td>
-                          <td><Button style={{textDecoration:"none"}} className="btn-md btn-success">View Details</Button></td>
+                          <td><Button style={{textTransform:"none"}} className="btn-md btn-success">View Details</Button></td>
                         </tr>
                       ))
                     )}

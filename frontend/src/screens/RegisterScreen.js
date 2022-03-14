@@ -14,6 +14,7 @@ const RegisterScreen = ({location, history}) => {
     const [user_type, setUserType] = useState('')
     const [address, setAddress] = useState('')
     const [phone_number, setPhoneNumber] = useState('')
+    const [profileImage, setProfileImage] = useState()
 
     const dispatch = useDispatch()
 
@@ -30,7 +31,15 @@ const RegisterScreen = ({location, history}) => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        dispatch(register(name, email, password, user_type, phone_number, address))
+        let formData = new FormData();
+        formData.append('name', name);
+        formData.append('email', email);
+        formData.append('password', password);
+        formData.append('user_type', user_type);
+        formData.append('phone_number', phone_number);
+        formData.append('address', address);
+        formData.append('profileImage', profileImage);
+        dispatch(register(formData));
     } 
 
     return (
@@ -104,6 +113,12 @@ const RegisterScreen = ({location, history}) => {
                         value={phone_number}
                         onChange={(e) => setPhoneNumber(e.target.value)}
                     ></Form.Control>
+                </Form.Group>
+                <br></br>
+                <Form.Group controlId="formFileMultiple" className="mb-3">
+
+                        <Form.Label>Add Profile Picture</Form.Label>
+                        <Form.Control onChange={(e) => setProfileImage(e.target.files[0])}  type="file" />
                 </Form.Group>
                 <br></br>
                 <Form.Group controlId='address'>

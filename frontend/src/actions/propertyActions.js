@@ -8,6 +8,9 @@ import {
   PROPERTY_LANDLORD_REQUEST,
   PROPERTY_LANDLORD_SUCCESS,
   PROPERTY_LANDLORD_FAIL,
+  SUBMIT_PROPERTY_REQUEST,
+  SUBMIT_PROPERTY_SUCCESS,
+  SUBMIT_PROPERTY_FAIL,
 } from "../constants/propertyConstants";
 import axios from "axios";
 
@@ -65,3 +68,33 @@ export const listLandlordProperties = (token) => async (dispatch) => {
     });
   }
 };
+
+export const submitProperty = (property, token) => async (dispatch) => {
+  try {
+    dispatch({ type: SUBMIT_PROPERTY_REQUEST });
+    
+    // const { data } = await axios.get(`/api/submitProperty`, {headers: {"Authorization": `Bearer ${token}`}});
+    const config = {
+      headers: {
+          'Content-type': 'application/json',
+          Authorization:  `Bearer ${token}`
+      }
+  }
+  const {data} = await axios.post(
+      '/api/submitProperty/',
+      property,
+      config
+  )
+
+    dispatch({ type: SUBMIT_PROPERTY_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: SUBMIT_PROPERTY_FAIL,
+      payload:
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
+    });
+  }
+};
+
