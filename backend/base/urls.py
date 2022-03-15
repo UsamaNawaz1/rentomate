@@ -19,5 +19,8 @@ urlpatterns = [
     path('property/<str:pk>/', views.getProperty, name='property'),
 
 
-    path('messages/', views.MessageAPIView.as_view())
+    path('messages/', views.MessageAPIView.as_view()),
+    path('createChatRoom/', views.createChatRoom, name='createChatRoom'),
+    path('getChatRooms/', views.getChatRooms, name='getChatRooms'),
+    path('contact/', views.contact, name='contact')
 ]

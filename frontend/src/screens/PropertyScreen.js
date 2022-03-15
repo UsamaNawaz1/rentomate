@@ -16,7 +16,9 @@ const PropertyScreen = ({ match }) => {
   const { loading, error, property } = productDetails;
   var temp_frame = '';
  
-  
+  const sendMessage = () => {
+    
+  }
  
   useEffect(() => {
     dispatch(listPropertyDetails(match.params.id));
@@ -152,6 +154,7 @@ const PropertyScreen = ({ match }) => {
                           boxShadow: "none",
                           textTransform:"none"
                         }}
+                        onClick={sendMessage}
                       >
                         <i
                           style={{ fontSize: "25px", float: "left" }}

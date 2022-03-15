@@ -4,7 +4,7 @@ from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from django.contrib.auth.models import User
-from .models import Address, LandLord, Property, Tenant, UserProfile
+from .models import Address, Chat, Contact, LandLord, Property, Tenant, UserProfile
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -74,3 +74,18 @@ class PropertySerializer(serializers.ModelSerializer):
     # def image_url(self, property: Property):
     #     image = property.image.url
     #     return image
+
+class ChatSerializer(serializers.ModelSerializer):
+    created_by = UserProfileSerializer(many=False)
+    # image = serializers.SerializerMethodField(method_name='image_url')
+    chat_with = UserProfileSerializer(many=False)
+    for_property = PropertySerializer(many=False)
+    class Meta:
+        model = Chat
+        fields = ['id', 'created_by', 'chat_with', 'for_property', 'room_name']
+
+
+class ContactSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Contact
+        fields = ['description', 'email', 'name']

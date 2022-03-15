@@ -8,7 +8,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.views import APIView
 from .filters import PropertyFilter
 
-from .models import LandLord, Property, Tenant, UserProfile, Address
+from .models import Chat, Contact, LandLord, Property, Tenant, UserProfile, Address
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 from rest_framework import status
@@ -16,11 +16,11 @@ from .properties import properties
 
 from django_filters.rest_framework import DjangoFilterBackend
 
-from .serializers import LandLordSerializer, PropertySerializer, TenantSerializer, UserProfileSerializer, UserSerializer, UserSerializerWithToken
+from .serializers import ChatSerializer, ContactSerializer, LandLordSerializer, PropertySerializer, TenantSerializer, UserProfileSerializer, UserSerializer, UserSerializerWithToken
 
 from .pusher import pusher_client
 import googlemaps
-
+import random, string
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
@@ -44,6 +44,44 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
+
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getChatRooms(request):
+    user = request.user
+    userprofile = UserProfile.objects.get(user=user)
+    chats = Chat.objects.filter(created_by=userprofile)
+    serializer = ChatSerializer(chats, many=True)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def createChatRoom(request):
+    user = request.user
+    data = request.data
+    property_id = data["property_id"]
+    chat_with = data["chat_with"]
+    userprofile = UserProfile.objects.get(user=user)
+
+    landlord = None
+    # tenant = None
+    # if userprofile.user_type == 'LandLord':
+    #     landlord = LandLord.objects.get(user_profile=userprofile)
+    # elif userprofile.user_type == 'Tenant':
+    #     tenant = Tenant.objects.get(user_profile=userprofile)
+    S=15
+    room_name = ''.join(random.choices(string.ascii_uppercase + string.digits, k = S))
+    property = Property.objects.get(pk=int(property_id))
+    chat_with = UserProfile.objects.get(pk=int(chat_with))
+    chat = Chat.objects.create(room_name=room_name, for_property=property, created_by=userprofile, chat_with=chat_with)
+    chat.save()
+    chats = Chat.objects.filter(created_by=userprofile)
+    serializer = ChatSerializer(chats, many=True)
+    return Response(serializer.data)
+
+
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -209,6 +247,7 @@ class getProperties(ListAPIView):
 
 @api_view(['GET'])
 def getProperty(request, pk):
+    
     property=Property.objects.prefetch_related('created_by__user_profile').get(pk=pk)
     serializer = PropertySerializer(property, many=False)
     return Response(serializer.data)
@@ -221,3 +260,14 @@ class MessageAPIView(APIView):
         })
 
         return Response([])
+
+@api_view(['POST'])
+def contact(request):
+    data = request.data
+    name = data["name"]
+    email = data["email"]
+    description = data["description"]
+    contact = Contact.objects.create(name=name, description=description, email=email)
+    contact.save()
+    serializer = ContactSerializer(contact, many=False)
+    return Response(serializer.data)

@@ -106,3 +106,7 @@ class Chat(models.Model):
     created_by = models.ForeignKey(UserProfile, related_name='created_by_userprofile', null=True, on_delete=models.CASCADE)
     chat_with = models.ForeignKey(UserProfile, related_name='chat_with_userprofile', null=True, on_delete=models.CASCADE)
     
+class Contact(models.Model):
+    description = models.CharField(max_length=255, null=True, default='')
+    email = models.CharField(max_length=255, null=True, default='')
+    name = models.CharField(max_length=255, null=True, default='')

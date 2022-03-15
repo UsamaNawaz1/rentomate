@@ -11,6 +11,7 @@ import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import AdminLayout from "./screens/Admin"
 import Chat from "./screens/Chat";
+import temp from "./screens/temp";
 import { PropertyContext } from './Contexts/PropertyContext';
 
 function App() {
@@ -44,6 +45,9 @@ function App() {
         <ChakraProvider>
           <Route path="/chat" component={Chat} />
         </ChakraProvider>
+        
+        <Route path="/temp" component={temp} />
+        
         <ChakraProvider>
         <Switch>
           <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
@@ -54,7 +58,7 @@ function App() {
         
       </main>
 
-      <Footer />
+     <Footer/>
       
     </Router>
   );
